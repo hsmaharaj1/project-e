@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FaGoogle } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import { Card, CardContent, CardDescription, CardTitle, CardHeader } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { auth, googleProvider } from "../firebase.config";
+import {createUserWithEmailAndPassword} from "firebase/auth"
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -20,14 +24,6 @@ const Signup = () => {
             ...inputValue,
             [name]: value,
         });
-    };
-
-    const handleGoogleSignIn = async () => {
-        try {
-            
-        } catch (error) {
-
-        }
     };
 
     const handleSubmit = async (e) => {
@@ -56,34 +52,63 @@ const Signup = () => {
     };
 
     return (
-        <div className="h-screen w-screen flex flex-col justify-center items-center">
-            <div className="font-medium text-[1.6rem] my-4">Create an account</div>
-            <Button onClick={handleGoogleSignIn}>
-                <FaGoogle />
-                <span className="mx-2">Google</span>
-            </Button>
-            <form onSubmit={handleSubmit}>
-                <div className="flex flex-col mb-2 items-start">
-                    <label htmlFor="email">Email</label>
-                    <Input name="email" value={email} placeholder="xyz@example.com" onChange={handleOnChange} />
-                </div>
-                <div className="flex flex-col mb-2 items-start">
-                    <label htmlFor="password">Password</label>
-                    <Input
-                        type="password"
-                        name="password"
-                        value={password}
-                        placeholder="Password"
-                        onChange={handleOnChange}
-                    />
-                </div>
-                <Button type="submit" className="w-[15rem] h-8">Create account</Button>
-
-                <div>
-                    Already have an account? <Link to={"/login"}><span className="font-bold">Login</span></Link>
-                </div>
-            </form>
-            <ToastContainer />
+        <div className="w-screen h-screen flex justify-center items-center">
+            <Card className="mx-auto max-w-sm">
+                <CardHeader>
+                    <CardTitle className="text-2xl text-left">Sign up</CardTitle>
+                    <CardDescription className="text-left">
+                        Enter your details to create an account
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid gap-4">
+                        {/* {errorMessage && <Alert severity="error">{errorMessage}</Alert>} */}
+                        <form onSubmit={handleSubmit} className="grid gap-2">
+                            <div className="grid gap-2">
+                                <Label htmlFor="email" className="text-left">Email</Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    value={email}
+                                    name="email"
+                                    onChange={handleOnChange}
+                                    placeholder="m@example.com"
+                                    required
+                                />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="password" className="text-left">Choose Password</Label>
+                                <Input
+                                    id="password"
+                                    name="password"
+                                    value={password}
+                                    onChange={handleOnChange}
+                                    type="password"
+                                    required
+                                />
+                                <Label htmlFor="password" className="text-left">Confirm Password</Label>
+                                <Input
+                                    id="password"
+                                    name="password"
+                                    value={password}
+                                    onChange={handleOnChange}
+                                    type="password"
+                                    required
+                                />
+                            </div>
+                            <Button type="submit" className="w-full">
+                                Create account
+                            </Button>
+                        </form>
+                    </div>
+                    <div className="mt-4 text-center text-sm">
+                        Already registered?{" "}
+                        <Link to={"/login"} className="underline">
+                            Login
+                        </Link>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 };
