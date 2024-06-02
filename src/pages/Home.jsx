@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import Navbar from "../components/custom/Navbar";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,11 +21,7 @@ const Home = () => {
       );
       const { status, user } = data;
       setUsername(user);
-      return status
-        ? toast(`Hello ${user}`, {
-            position: "top-right",
-          })
-        : (removeCookie("token"), navigate("/login"));
+      if (!status) (removeCookie("token"), navigate("/login"));
     };
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
@@ -39,14 +35,17 @@ const Home = () => {
 
   return (
     <>
-      <div className="h-screen w-screen flex flex-col justify-center items-center">
-        <h4>
-          {" "}
-          Welcome <span>{username}</span>
-        </h4>
-        <button onClick={Logout}>LOGOUT</button>
+      <div className="h-screen w-screen flex flex-col">
+        <Navbar />
+        <div className="h-screen w-screen flex flex-col justify-center items-center">
+
+          <h4>
+            {" "}
+            Welcome <span>{username}</span>
+          </h4>
+          {/* <button onClick={Logout}>LOGOUT</button> */}
+        </div>
       </div>
-      {/* <ToastContainer /> */}
     </>
   );
 };
