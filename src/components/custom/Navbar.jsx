@@ -16,16 +16,24 @@ export default function Navbar() {
 
   return (
     <header className="flex h-16 w-full items-center justify-between border-b bg-white px-4 dark:border-gray-800 dark:bg-gray-950 md:px-6">
-      <a href="#" className="flex items-center gap-2" prefetch={false}>
-        <MountainIcon className="h-6 w-6" />
-        <span className="text-lg font-bold">Acme Inc</span>
+      <a href="#" className="flex items-center gap-2" prefetch="false">
+        {/* <MountainIcon className="h-6 w-6" /> */}
+        <span className="text-lg font-bold">Mate-Match</span>
       </a>
       <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" onClick={() => navigate("/explore")}>
           Explore
         </Button>
-        <Button variant="outline" size="sm">
+
+        {/* To be changed the navigation */}
+        <Button variant="outline" size="sm" onClick={()=> navigate("/addevent")}>
           Add Event
+        </Button>
+        <Button variant="outline" size ="sm" onClick={() => navigate("/myevents")}>
+          My Events
+        </Button>
+        <Button variant="outline" size="sm" onClick={() => navigate("/requested")}>
+          Requested
         </Button>
       </div>
       <DropdownMenu>
@@ -48,7 +56,7 @@ export default function Navbar() {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <a onClick={SignOut} className="flex justify-center align-middle cursor-pointer">
+            <a onClick={SignOut} className="flex justify-center align-middle cursor-pointer" prefetch="false">
               <LogOutIcon className="mr-2 h-4 w-4" />
               Sign Out
             </a>
